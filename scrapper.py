@@ -20,6 +20,7 @@ words_preparse = soup.find_all("tr")
 words_obj = []
 words = []
 
+#get needed data
 for word_preparse in words_preparse:
     entries = word_preparse.find_all("td")
     word_enery = []
@@ -38,6 +39,7 @@ for word_preparse in words_preparse:
             word_enery.append(text)
     words.append(word_enery)
 
+#create objects from data
 for i in range(len(words)):
     if len(words[i]) > 0:
         level = words[i][0]
@@ -47,6 +49,7 @@ for i in range(len(words)):
         pol_trans = words[i][4]
         words_obj.append(Word_Enitity(first_form, second_form, third_form, pol_trans, level))
 
+#group by level
 a2 = []
 b1 = []
 b2 = []
@@ -65,12 +68,7 @@ for word in words_obj:
     if word.level == 'c2':
         c2.append(word)
 
-
-json_b1 = json.dumps([ob.__dict__ for ob in b1], indent=3)
-json_b2 = json.dumps([ob.__dict__ for ob in b2], indent=3)
-json_c1 = json.dumps([ob.__dict__ for ob in c1], indent=3)
-json_c2 = json.dumps([ob.__dict__ for ob in c2], indent=3)
-
+#dumps lists to files
 with open('a2-words.json', 'w') as outfile:
     json.dump([ob.__dict__ for ob in a2], indent=3, fp=outfile)
 
