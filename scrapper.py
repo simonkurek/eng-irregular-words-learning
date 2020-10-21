@@ -1,6 +1,7 @@
 from urllib.request import urlopen
 from bs4 import BeautifulSoup
 from Word_Enitity import Word_Enitity
+import json
 
 #html parsing
 url = "https://www.ang.pl/gramatyka/czasowniki-verbs/czasowniki-nieregularne"
@@ -46,17 +47,56 @@ for i in range(len(words)):
         pol_trans = words[i][4]
         words_obj.append(Word_Enitity(first_form, second_form, third_form, pol_trans, level))
 
+a2 = []
+b1 = []
+b2 = []
+c1 = []
+c2 = []
+
 for word in words_obj:
-    print(word.__dict__)
+    if word.level == 'a2':
+        a2.append(word)
+    if word.level == 'b1':
+        b1.append(word)
+    if word.level == 'b2':
+        b2.append(word)
+    if word.level == 'c1':
+        c1.append(word)
+    if word.level == 'c2':
+        c2.append(word)
 
-#for word in words:
-#    print(word.display())
 
+json_b1 = json.dumps([ob.__dict__ for ob in b1], indent=3)
+json_b2 = json.dumps([ob.__dict__ for ob in b2], indent=3)
+json_c1 = json.dumps([ob.__dict__ for ob in c1], indent=3)
+json_c2 = json.dumps([ob.__dict__ for ob in c2], indent=3)
 
-    # level = word_preparse[0]['class'][1]
-    # first_form = word_preparse[0].find('a').next_sibling.split(', ')
-    # second_form = word_preparse[1].string.split(', ')
-    # third_form = word_preparse[2].string.split(', ')
-    # pol_trans = word_preparse[3].string.split(', ')
-    # word = Word_Enitity(first_form, second_form, third_form, pol_trans, level)
-    # words.append(word)
+with open('a2-words.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in a2], indent=3, fp=outfile)
+
+with open('a2-words.min.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in a2], fp=outfile)
+
+with open('b1-words.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in b1], indent=3, fp=outfile)
+
+with open('b1-words.min.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in b1], fp=outfile)
+
+with open('b2-words.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in b2], indent=3, fp=outfile)
+
+with open('b2-words.min.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in b2], fp=outfile)
+
+with open('c1-words.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in c1], indent=3, fp=outfile)
+
+with open('c1-words.min.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in c1], fp=outfile)
+
+with open('c2-words.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in c2], indent=3, fp=outfile)
+
+with open('c2-words.min.json', 'w') as outfile:
+    json.dump([ob.__dict__ for ob in c2], fp=outfile)
